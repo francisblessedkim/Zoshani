@@ -125,6 +125,45 @@ body {
   cursor: pointer;
 }
 
+/* Animated hamburger button */
+.nav__menu__btn.hamburger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.nav__menu__btn.hamburger .h-bun {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: background 180ms ease;
+}
+.nav__menu__btn.hamburger .h-bun::before,
+.nav__menu__btn.hamburger .h-bun::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 220ms cubic-bezier(.2,.9,.2,1), opacity 160ms ease;
+}
+.nav__menu__btn.hamburger .h-bun::before { top: -7px }
+.nav__menu__btn.hamburger .h-bun::after { top: 7px }
+.nav__menu__btn.hamburger.is-open .h-bun { background: transparent }
+.nav__menu__btn.hamburger.is-open .h-bun::before { transform: translateY(7px) rotate(45deg) }
+.nav__menu__btn.hamburger.is-open .h-bun::after { transform: translateY(-7px) rotate(-45deg) }
+
+
 .nav__links {
   list-style: none;
   position: absolute;
@@ -151,6 +190,36 @@ body {
   transform: translateY(0);
   opacity: 1;
   pointer-events: auto;
+}
+
+/* Overlay polish: subtle backdrop, soft shadow when open */
+.nav__links.open {
+  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+  background-color: rgba(255,255,255,0.98);
+  backdrop-filter: blur(4px);
+}
+
+/* Staggered reveal for menu items */
+.nav__links li { opacity: 0; transform: translateY(8px); transition: opacity 260ms ease, transform 260ms cubic-bezier(.2,.9,.2,1); }
+.nav__links.open li { opacity: 1; transform: translateY(0); }
+.nav__links.open li:nth-child(1) { transition-delay: 80ms }
+.nav__links.open li:nth-child(2) { transition-delay: 140ms }
+.nav__links.open li:nth-child(3) { transition-delay: 200ms }
+.nav__links.open li:nth-child(4) { transition-delay: 260ms }
+.nav__links.open li:nth-child(5) { transition-delay: 320ms }
+.nav__links.open li:nth-child(6) { transition-delay: 380ms }
+
+/* Accessibility: focus styles and reduced-motion preference */
+.nav__links a:focus-visible, .nav__links a:focus {
+  outline: 3px solid rgba(164,198,57,0.22);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.nav__menu__btn.hamburger:focus-visible { outline: 3px solid rgba(61,61,31,0.12); border-radius: 6px }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__links, .nav__links li, .nav__menu__btn .h-bun, .nav__menu__btn .h-bun::before, .nav__menu__btn .h-bun::after { transition: none !important; animation: none !important }
 }
 
 .nav__links a {

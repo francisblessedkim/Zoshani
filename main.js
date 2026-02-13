@@ -2,13 +2,53 @@ const menuBtn = document.getElementById("menu-btn");
 const navLinks = document.getElementById("nav-links");
 
 if (menuBtn) {
+  // support both icon-font <i> toggling and the new CSS hamburger
   const menuBtnIcon = menuBtn.querySelector("i");
+  let _prevFocus = null;
   menuBtn.addEventListener("click", () => {
+    const wasOpen = navLinks.classList.contains("open");
     navLinks.classList.toggle("open");
     const isOpen = navLinks.classList.contains("open");
-    if (menuBtnIcon) menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
+    // manage focus: remember previous element and move focus into menu when opened
+    if (isOpen && !wasOpen) {
+      _prevFocus = document.activeElement;
+    }
+    // if icon font present, swap classes (backwards compatibility)
+    if (menuBtnIcon) {
+      menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
+    } else {
+      // animate CSS hamburger
+      if (isOpen) {
+        menuBtn.classList.add('is-open');
+        menuBtn.setAttribute('aria-expanded','true');
+        // move focus to first link inside the menu for keyboard users
+        const firstLink = navLinks.querySelector('a');
+        if (firstLink) firstLink.focus();
+      } else {
+        menuBtn.classList.remove('is-open');
+        menuBtn.setAttribute('aria-expanded','false');
+        // restore previous focus
+        if (_prevFocus && typeof _prevFocus.focus === 'function') _prevFocus.focus();
+      }
+    }
   });
 }
+
+// allow closing the menu with Escape and restore focus
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' || e.key === 'Esc') {
+    if (navLinks && navLinks.classList.contains('open')) {
+      navLinks.classList.remove('open');
+      const icon = menuBtn && menuBtn.querySelector('i');
+      if (icon) icon.setAttribute('class','ri-menu-line');
+      else if (menuBtn) {
+        menuBtn.classList.remove('is-open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
+      if (_prevFocus && typeof _prevFocus.focus === 'function') _prevFocus.focus();
+    }
+  }
+});
 
 if (navLinks) {
   navLinks.addEventListener("click", (e) => {
@@ -16,7 +56,12 @@ if (navLinks) {
     if (e.target.tagName === 'A') {
       navLinks.classList.remove("open");
       const icon = menuBtn && menuBtn.querySelector("i");
-      if (icon) icon.setAttribute("class", "ri-menu-line");
+      if (icon) {
+        icon.setAttribute("class", "ri-menu-line");
+      } else if (menuBtn) {
+        menuBtn.classList.remove('is-open');
+        menuBtn.setAttribute('aria-expanded','false');
+      }
     }
   });
 }
@@ -114,6 +159,10 @@ document.addEventListener('click', (e) => {
     navLinks.classList.remove('open');
     const icon = menuBtn && menuBtn.querySelector('i');
     if (icon) icon.setAttribute('class','ri-menu-line');
+    else if (menuBtn) {
+      menuBtn.classList.remove('is-open');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
   }
 });
 
