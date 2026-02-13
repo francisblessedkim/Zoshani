@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact — Zoshani Advisory</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header small-header">
+    <nav>
+      <div class="nav__bar">
+        <div class="logo"><a href="index.html"><img src="assets/zoshani logo.png" alt="Zoshani logo"></a></div>
+        <div class="nav__menu__btn" id="menu-btn"><i class="ri-menu-line"></i></div>
+      </div>
+      <ul class="nav__links" id="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="initiatives.html">Initiatives</a></li>
+        <li><a href="advisory.html">Advisory</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+      <a class="btn nav__btn" href="contact.html">Schedule a Call</a>
+    </nav>
+
+    <div class="section__container header__container contact-hero">
+      <div class="contact-hero-grid">
+        <div class="contact-hero-content" data-animate>
+          <p class="header-sub">Get in touch</p>
+          <h1 class="header-title">Contact<br><span>Let's build something transformative</span></h1>
+          <p class="hero-lead">Whether you're a government, entrepreneur, U.S. exporter, or investor — we're ready to partner on projects that scale industrial capability and local prosperity.</p>
+        </div>
+
+        <div class="contact-hero-media" data-animate>
+          <img src="assets/Photos/Board.png" alt="Contact" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container contact-body">
+    <section class="contact-grid">
+      <div class="contact-panel" data-animate>
+        <h2 class="section-title">Start a Conversation</h2>
+        <p class="section-intro">Tell us about your project and we’ll get back with a suggested first step.</p>
+
+        <form id="contact-form" class="contact-form" data-endpoint="">
+          <div class="form-row">
+            <input name="name" type="text" placeholder="Your name" required />
+            <input name="email" type="email" placeholder="Email address" required />
+          </div>
+          <input name="organization" type="text" placeholder="Organization (optional)" />
+          <select name="interest">
+            <option value="project">Project Partnership</option>
+            <option value="investment">Investment Inquiry</option>
+            <option value="export">U.S. Export / Supply</option>
+            <option value="other">Other</option>
+          </select>
+          <textarea name="message" placeholder="Brief description of your project / ask" rows="6" required></textarea>
+          <div style="display:flex; gap:0.6rem; align-items:center;">
+            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="button" class="btn btn-ghost" id="mailto-fallback">Email Us</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="contact-details" data-animate>
+        <h3>Reach us</h3>
+        <div class="contact-item"><div class="contact-label">Email</div><div class="contact-value">info@zoshani.us</div></div>
+        <div class="contact-item"><div class="contact-label">Partnerships</div><div class="contact-value">partnerships@zoshani.us</div></div>
+        <div class="accent-bar"></div>
+        <h4>Headquarters</h4>
+        <p>Washington, D.C. (U.S.)</p>
+        <h4>Regional offices</h4>
+        <p>Accra, Ghana · Lagos, Nigeria</p>
+      </aside>
+    </section>
+
+    <div style="text-align:center; margin:2rem 0">
+      <a class="btn btn-primary" href="services.html">Explore Our Services</a>
+    </div>
+
+    <footer>
+      <div class="footer-tagline">Building Tomorrow's Industrial Ecosystems Today</div>
+      <p>© 2026 Zoshani Advisory LLC. All rights reserved.</p>
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>
