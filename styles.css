@@ -100,14 +100,14 @@ body {
   background-repeat: no-repeat;
 }
 
-nav {
+.nav {
   position: fixed;
   isolation: isolate;
   top: 0;
   width: 100%;
   max-width: var(--max-width);
   margin: auto;
-  z-index: 9;
+  z-index: 1200;
 }
 
 .nav__bar {
@@ -116,7 +116,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  background-color: var(--primary-color);
+  background: transparent; /* remove solid accent behind the logo */
 }
 
 .nav__menu__btn {
@@ -134,27 +134,40 @@ nav {
   align-items: center;
   flex-direction: column;
   gap: 2rem;
-  background-color: rgba(188, 28, 92, 0.9);
-  transform: translateY(-100%);
-  transition: 0.5s;
-  z-index: -1;
+  background-color: rgba(255,255,255,0.98); /* neutral overlay for mobile */
+  /* position the mobile menu directly under the nav bar, hidden by default */
+  top: 56px;
+  left: 0;
+  transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.32s cubic-bezier(.2,.9,.2,1), opacity 220ms ease;
+  z-index: 9999;
+  max-height: 80vh;
+  overflow: auto;
 }
 
 .nav__links.open {
   transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .nav__links a {
   position: relative;
   isolation: isolate;
   padding-bottom: 8px;
-  color: var(--white);
-  transition: 0.3s;
+  color: var(--text-dark);
+  transition: 0.2s;
 }
 
 .nav__btn {
   display: none;
 }
+
+.nav__bar { min-height: 56px; }
+.nav__bar .logo { display:flex; align-items:center }
+.nav__menu__btn { margin-left: auto }
 
 .header__container {
   padding-block: 10rem 15rem;
@@ -523,7 +536,7 @@ nav {
   text-align: center;
 }
 
-@media (width > 576px) {
+@media (min-width: 577px) {
   .room__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -533,7 +546,7 @@ nav {
   }
 }
 
-@media (width > 768px) {
+@media (min-width: 769px) {
   nav {
     padding: 2rem 1rem;
     position: static;
@@ -558,6 +571,10 @@ nav {
     transform: none;
     flex-direction: row;
     background-color: transparent;
+    opacity: 1;
+    pointer-events: auto;
+    top: auto;
+    left: auto;
   }
 
   .nav__btn {
@@ -575,6 +592,10 @@ nav {
     transition: 0.3s;
     transform-origin: left;
   }
+
+  /* when header/nav sits over the hero on desktop, or when nav is scrolled, use white links for contrast */
+  .header .nav__links a, .site-nav.scrolled .nav__links a { color: white }
+  .header .nav__menu__btn { color: white }
 
   .nav__links a:hover::after {
     width: 100%;
@@ -598,7 +619,7 @@ nav {
   }
 }
 
-@media (width > 1024px) {
+@media (min-width: 1025px) {
   .room__grid {
     gap: 2rem;
   }
@@ -647,11 +668,14 @@ nav {
   align-items:center;
 }
 
-.nav__links a { color: white; padding:0.35rem 0.5rem; border-radius:4px }
+.nav__links a { color: var(--text-dark); padding:0.35rem 0.5rem; border-radius:4px }
 .nav__links a.active, .nav__links a:hover { background: rgba(255,255,255,0.08); }
 
 .small-header .nav__links a { color: var(--text-dark) }
 .small-header .nav__menu__btn { color: var(--text-dark) }
+
+/* when nav sits over hero/header use white links */
+/* header nav link color is handled in desktop breakpoint so mobile overlay keeps dark links */
 
 /* Service cards */
 .service-list-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem }
@@ -857,7 +881,6 @@ header {
 .site-nav { position:fixed; left:0; right:0; top:0; z-index:1200; padding:0.6rem 1rem; transition: background 300ms ease, box-shadow 300ms ease; }
 .site-nav .nav__bar { max-width:1200px; margin:auto; background:transparent; padding:0.2rem 0.4rem }
 .site-nav.scrolled { background: rgba(255,255,255,0.06); backdrop-filter: blur(6px); box-shadow:0 6px 18px rgba(0,0,0,0.12) }
-.site-nav.scrolled .nav__links a { color: white }
 
 /* inner pages use small-header class to reduce visual weight */
 .small-header header { padding-block:1.5rem }
